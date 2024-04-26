@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!DOCTYPE function SYSTEM "qtfmfunction.dtd">
+function m = outer_product(a, b)
+% OUTER PRODUCT of two quaternions (experimental).
+
+% Copyright © 2008 Stephen J. Sangwine and Nicolas Le Bihan.
+% See the file : Copyright.m for further details.
+
+error(nargchk(2, 2, nargin)), error(nargoutchk(0, 1, nargout))
+  
+if isa(a, 'quaternion') && isa(b, 'numeric')
+    b = quaternion(b);
+elseif isa(b, 'quaternion') && isa(a, 'numeric')
+    a = quaternion(a);
+elseif ~isa(a, 'quaternion') || ~isa(b,'quaternion')
+    error('Can only handle quaternions and numerics')
+end
+
+if ~isscalar(a) || ~isscalar(b)
+    error('Outer product cannot operate on matrices or vectors of quaternions.')
+end
+
+m = [scalar(a); x(a); y(a); z(a)]*[scalar(b), x(b), y(b), z(b)];
+
+% NOTE It should be possible to extend this to matrices and vectors by
+% iteration. The resulting matrix would have 4x4 blocks representing each
+% outer product. Whether this is useful or not is unknown.
+
+<!--$Id$-->

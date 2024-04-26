@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/1999/REC-html401-19991224/loose.dtd">
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Quaternion Toolbox Overview</title>
+<link rel="stylesheet" href="qtfmstyle.css" type="text/css">
+</head>
+<body>
+<h1>Quaternion Toolbox Overview</h1>
+<h2>Quaternions</h2>
+<p>
+Quaternions are four-dimensional hypercomplex numbers (an extension of the
+complex number concept to higher dimensions). Conventionally, quaternions
+have four components and can be written in Cartesian form as:
+</p>
+<pre>
+q = w + x<b>i</b> + y<b>j</b> + z<b>k</b>
+</pre>
+where the four 'coefficients' <tt>w, x, y, z</tt> are real or complex and
+the three hypercomplex operators <b>i, j</b> and <b>k</b> are square
+roots of -1 obeying the following rule:
+<b>i</b>^2 = <b>j</b>^2 = <b>k</b>^2 = <b>ijk</b> = -1.
+<p>
+.... to be expanded.
+<h2>Toolbox design principles</h2>
+<p>
+Quaternions are represented by the toolbox with a private internal representation.
+Quaternion matrices are constructed by the constructor function <tt>quaternion</tt>
+which can combine together numeric matrices to make a full or pure quaternion.
+It is also possible to make a quaternion value by using the three quaternion
+'operators', which are provided as parameterless functions <tt>qi, qj, qk</tt>:
+<p>
+<pre>
+3 .* qi + 4 .* qj
+</pre>
+will yield the quaternion value 3<b>i</b> + 4<b>j</b>.
+<p>
+The toolbox has been designed to extend Matlab&reg; in as natural a way as
+possible. Therefore the user should assume unless there is a reason to do
+otherwise that the way to carry out an operation is the same as in Matlab&reg;.
+Where this is not the case, an error should occur. The documentation or the
+source code for the appropriate function should be consulted to see whether
+there is a known limitation.
+<p>
+For example, standard Matlab&reg; notation has been overloaded for quaternion
+arrays, so that the following makes sense to the toolbox if the variables
+exist as quaternion arrays:
+<p>
+<pre>
+[p q r] * [a b c].'
+</pre>
+<p>
+Even if one of the vectors is replaced by a numeric vector, the result is
+still computable, since the toolbox can multiply numeric values by quaternions:
+<p>
+<pre>
+>> [1 2 3] * [qi qj qk].'
+ 
+ans = 1 * I + 2 * J + 3 * K
+</pre>
+<p>
+Further, we can replace one element in the left vector by a quaternion,
+since the toolbox allows quaternion and numeric (non-quaternion) arrays
+to be concatenated: the numeric array is automatically converted to a
+quaternion array by putting the numeric values into the scalar part of an
+otherwise zero quaternion:
+<pre>
+>> [1 qj 3] * [qi qj qk].'
+
+ans =
+ 
+     -1 + 1 * I + 0 * J + 3 * K
+</pre>
+In most cases where quaternion matrices and vectors are handled it is not
+necessary to resort to 'tricks' to make things work: try the obvious first
+and if errors occur, work around them by explicit coding.
+<ul>
+<li>Q matrices, vectors arrays.
+<li>Arithmetic, inc multiplication.
+<li>Non-commutativity.
+<li>Normed algebra.
+<li>Division algebra if the coefficients are real.
+<li>Discussion of the complexified case (divisors of zero).
+<li>Uncertainty in some of the complexified areas, and in some algorithms
+    which have not yet been extended to Q, such as LU, matrix square root,
+    etc.
+<li>Use of standard Matlab notation, including operators and brackets, etc.
+</ul>
+</p>
+<h4>&copy; 2008-2011 Stephen J. Sangwine and Nicolas Le Bihan.<h4>
+<p><a href="license.html">License terms.</a></p>
+</body>
+</html>
+<!--$Id: overview.html,v 1.9 2011/01/05 20:56:17 sangwine Exp $-->

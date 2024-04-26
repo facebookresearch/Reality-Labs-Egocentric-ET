@@ -1,0 +1,407 @@
+--------------------------------------------------------------
+                Quaternion toolbox for Matlab
+                http://qtfm.sourceforge.net/
+       Mailing list: qtfm-announce@lists.sourceforge.net
+--------------------------------------------------------------
+Copyright (©) 2005-2010 Stephen J. Sangwine & Nicolas Le Bihan
+Email: sjs@essex.ac.uk, nicolas.le-bihan@gipsa-lab.inpg.fr
+--------------------------------------------------------------
+
+                     Release Notes
+
+Version 1.9  30 March 2011
+
+The LU and QR decompositions are now implemented.
+
+The test code (specifically test_version.m) has been updated
+to cope with a Matlab version number of the form 7.11.1 (first
+used with R2010bSP1). Versions before QTFM 1.9 will report a
+problem with the Matlab version number when the test code is
+run under Matlab R2010bSP1.
+
+Version 1.8  19 December 2010
+
+Some code deep inside the toolbox has been speeded up by rewriting
+to avoid unnecessary recursion and calls to the constructor function
+and to remove unneeded private functions.  The effect is a general
+speedup across all the higher-level functions.
+
+A new option ('block') has been added to the adjoint and unadjoint
+functions. This makes it possible to work with adjoint matrices
+in which each quaternion is represented by a contiguous sub-block
+with layout identical to the adjoint of a singleton quaternion.
+Without this option, the previous layout will be returned, so the
+code remains upwardly compatible with QTFM version 1.7. Additional
+test code has been added to exercise the new functionality.
+
+We have become aware that the eig and svd functions do not give correct
+results on complex quaternion matrices. Both functions now give a
+warning if passed a complex quaternion matrix and a TODO note in the
+code explains the nature of the problem.
+
+The scatter3 function now has a possible second parameter with value
+'rgb' or 'seq' which colours the plotted points.
+
+Version 1.7  11 May 2010
+
+Fixed the plus and constructor functions so that addition or
+construction of quaternions with components of different classes
+is trapped as an error.
+
+Fixed a bug in iqdft that failed to apply the correct scale
+factor to row vectors. Also added more test cases to test code
+for qdft/qfft/fft/qdft2/qfft2/fft2 functions.
+
+The functions orthogonal and orthonormal_basis, both used by the
+various fft functions, have been modified to avoid problems with
+specific axis arguments. Orthonormal_basis now also detects NaNs
+and Infs in the basis and issues an error to stop an incorrect
+basis from being used (this affects only complex bases). Test
+code has also been added for these two functions (they are of
+course also tested by the test code for the many fft functions.)
+
+The test code (specifically test_version.m) has been updated
+to cope with a 2-digit Matlab minor version number. Versions
+before this release will fail when the test code is run under
+Matlab R2010a or later (version 7.10).
+
+The cdpolar function has been revised to better handle cases
+where the (w, x) components of q are very small relative to the
+(y, z) components, and the handling of the computation of the B
+result has been simplified. The test code has also been revised.
+
+The adjoint function has been slightly modified to change the
+result returned in the case of a 'real' adjoint, in order to
+be compatible with several published definitions and to support
+the LQSTFM toolbox (http://lqstfm.sourceforge.net/). The change
+is documented and referenced in the code. A corresponding change
+has been made in the unadjoint function.
+
+The functions expm, logm and sqrtm are now implemented using a
+crude method based on adjoint matrices. This is known to be
+inaccurate for larger matrices, but is an improvement over the
+previous algorithm (unimplemented).
+
+Version 1.6  24 December 2009
+
+A new function scatter3 provides an overloading of the Matlab
+function of the same name for pure quaternion vectors.
+
+A new function normq computes the norm or semi-norm. The
+functionality was already present in the private function
+modsquared, but the new function is user-visible.
+
+The adjoint and unadjoint functions now support a third type
+of adjoint matrix - the quaternion adjoint of a complex
+quaternion or biquaternion matrix.
+
+The test code now checks that the QFTM directories are on the
+Matlab path. This permits a more meaningful error message in
+the case when the path does not include QTFM, and should be
+helpful to new users. There are some minor changes to the test
+code to make it more robust (mainly to use explicit QTFM paths
+to find the files, rather than relative paths). This prevents
+conflict with files of the same name elsewhere on the path.
+
+The angle and axis functions were modified to fix a problem
+with complex quaternions where the incorrect use of the unit
+function caused some negated results so that reconstruction
+using abs(q) .* exp(axis(q) .* angle(q)) would not always be
+correct.
+
+The cdpolar function was modified to prevent warnings about
+undefined axis.
+      
+Version 1.5  2 May 2009
+
+With this release of the toolbox we have changed the license
+versions to GPL v3 and FDL v1.3. The two files gpl.txt and
+fdl.txt supplied with the toolbox now contain these versions
+of the two licenses in place of the previous versions.
+
+The help files now include a categorized list of functions as
+well as the alphabetical list, and a list of Matlab functions
+that are known to work with the toolbox.
+
+Three new functions imreadq/imwrite/image provide overloadings
+or similar functionality to Matlab functions for handling
+images. The functionality is limited to simple cases, such as
+RGB images. More complex requirements can be met by writing
+explicit conversions to non-quaternion arrays which can be
+handled by the standard Matlab functions.
+
+The disp function now outputs information on the class of the
+components of the quaternion if different from double. Because
+disp is called implicitly by Matlab, this improvement is also
+apparent when running commands in the command window without a
+final semicolon.
+
+The bidiagonalize function has been rewritten and can now cope
+with very large arrays (example 2000 x 2000 quaternions). This
+means the SVD function can now handle large arrays too, since
+it depends on bidiagonalize to perform the first step in
+computing the SVD. This removes a limitation noted prior to
+version 1.4 and partially fixed with that version. There is a
+slight run-time increase for small arrays as a result of this
+change which is not understood, as the previous code is based
+on explicit Householder matrices which should be slower.
+
+A new overloading (bsxfun) has been added with limited function
+in order to support cov, std and var, which have been broken
+since Matlab Version 7.4. Arrayfun has also been added, but is
+not yet implemented, in order to trap any calls from Matlab
+functions that might use it.
+
+All .m files and .xml files now contain CVS Id tags to identify
+the file revisions.
+
+Version 1.4  1 November 2008
+
+The toolbox now has help files accessible in the Matlab help browser.
+Many of these lack example code - this will be added as time permits.
+The authors would welcome examples from users to add to the
+documentation, especially with graphical outputs.
+
+There are now some QTFM menu items accessible from the Matlab Start
+button. These include access to the help files, the ability to run
+the test suite, to refresh HTML help files (useful if updates are
+downloaded by CVS), and access to the QTFM website.
+
+The show, char, and displayall functions have been modified to give
+a clearer output, especially in the case where the quaternions are
+complex.
+
+The conv and conv2 functions have been rewritten to use a much
+faster vectorised algorithm (due to Todd Ell, first implemented
+in the LQSTFM toolbox, http://lqstfm.sourceforge.net).
+
+The bidiagonalize function has been rewritten to operate iteratively
+rather than recursively. This overcomes a limitation on the size of
+matrices that could be handled by the svd function without running
+out of memory or recursion depth. Further improvements to this
+function are anticipated in a future release to improve the size
+of matrices that can be handled by this and the svd function.
+
+The end function has been rewritten to use the builtin Matlab
+function. This corrects an error where end gave incorrect
+results on row vectors.
+
+The numel function has been modified to call the builtin Matlab
+function so that subscripted indexing will work. Any existing
+code that calls numel should be modified to call prod(size(q))
+instead, because numel will return 1 in all cases.
+
+Connected with the change to numel, subscripted indexing of the
+form q.x now works for quaternion arrays with more than one
+element. The subscripted notations available are: w, x, y, z for
+the four components, scalar or s (synonyms of w); I, J, K (synonyms
+of x, y, z); vector or v; and real/imag.
+
+The reshape function is now implemented for quaternion arrays.
+This was made possible by the change to numel described above.
+
+A new private function has been added called overload. This makes
+it trivial to implement overloadings of Matlab functions for which
+the algorithm is to apply the Matlab function to the components of
+the quaternion array and then compose a quaternion array from the
+result.
+
+The Matlab functions blkdiag and squeeze are now overloaded for
+quaternions.
+
+New functions implemented are: eyeq, onesq, zerosq, zerosv. These
+are quaternion equivalents of the Matlab functions eye, ones and
+zeros (zerosq returns a full quaternion zero array, whereas zerosv
+returns a pure quaternion zero array).
+
+New functions have been added for generating random quaternions.
+randv and randq generate uniformly distributed unit vectors and
+quaternions respectively. randf generates unit vectors concentrated
+in a particular direction (in 3-space) using the Fisher distribution.
+randvmf generates unit quaternions concentrated in a particular
+direction (in 4-space) using the von Mises-Fisher distribution.
+
+The Matlab function cast is now overloaded for casting a quaternion
+array to have different element types. This functionality was
+previously available in the function convert (which remains).
+
+Version 1.3 28 March 2008
+
+The Matlab functions cumsum, diff, prod, cumprod, permute and
+ipermute are now overloaded.
+
+The size function now works for arrays with ndims > 2, and the
+ndims function has been implemented for quaternion arrays. The
+disp function (and hence display) has been rewritten to cope
+with arrays with ndims > 2.
+
+A new function slerp (spherical linear interpolation) has been
+added.
+
+The power function (.^) now supports a vector or matrix power,
+provided the left parameter is scalar. This matches the behaviour
+of the Matlab power function.
+
+New functions cd, dc, and cdpolar, have been added. The first
+two provide trivial conversions between the Cartesian and
+Cayley-Dickson forms of a quaternion, and the third provides a
+novel new polar decomposition.
+
+Non-working placeholder functions lu and qr have been added
+for the LU and QR decompositions, and for matrix functions
+expm, logm, funm, sqrtm and mpower, which we may implement at
+some time in the future. A non-working file for squeeze has
+also been added.
+
+A bug in the mean and sum functions was fixed by modifying the
+private function compose and a test function was added to test
+these and several other overloaded Matlab functions.
+
+Behaviour of the private function isocomplex has been altered in
+order not to return zero when the second parameter is perpendicular
+to the given quaternion. This change affects angle and log also,
+since they use isocomplex. A warning is still given, because the
+value returned is one of two arbitrary possibilities.
+
+Version 1.2 9 December 2007
+
+Errors in the real and imag functions have been corrected
+(these were introduced with version 1.1).
+
+A number of minor M-Lint issues and bugs were fixed.
+
+The test suite (in the sub-directory test) has been modified so
+that each test is now a function. This means the tests now use
+local variables and no longer use clear, so that running the tests
+will not clear existing user variables.
+
+Version 1.1 15 May 2007
+
+Performance improvements. A new private function vee.m implements
+the underlying operation of extracting the vector part in a much
+more efficient way than previously, saving about 15% in execution
+time (this impacts many of the arithmetic functions, so is a wide
+ranging improvement). All the class functions have been modified
+to call private functions such as ispure_internal, exe, wye, zed,
+directly. They also use compose directly to avoid calling the
+quaternion constructor function with its high error checking
+overhead. This results in a reduction in runtime of about 30% for
+functions like the SVD.
+
+An examples directory has been added to the distribution containing
+scripts that demonstrate use of the toolbox.
+
+The function dot has been renamed scalar_product. This avoids
+an inconsistency between the standard Matlab function dot which
+computes the inner product of two vectors and the quaternion
+scalar product which works elementwise. IMPORTANT: when updating
+to this release, delete the existing file dot.m. The Matlab
+function dot will work for quaternions (since all the functions
+needed within it are overloaded) but the standard Matlab function
+cannot be called if the existing QTFM/dot.m file still exists.
+Also, any existing scripts or user-written functions which called
+the QTFM/dot function will need to be altered to call the new
+scalar_product function instead. There are several places in the
+QTFM code where this change has been made (transparent to the
+user, of course). A check has been added to the file test.m that
+will detect the presence of the old dot.m file and warn the user
+about it.
+
+The adjoint function now accepts a complexified quaternion matrix
+and creates an adjoint. (The restriction to real quaternions was
+discovered to be unnecessary.) The unadjoint function has been
+changed to match (this requires some sum and differences to be
+computed instead of taking real and imaginary parts).
+
+The disp function now includes the word 'complex' in the output
+when describing quaternion arrays if at least one element of the
+array is complex.
+
+Version 1.0 14 December 2006
+
+This release does not mark a major update to the toolbox, but
+reflects the fact that the previous version has now been in use
+for long enough for problems to come to light.  The toolbox is
+now sufficiently mature to have a version number that does not
+start with zero.
+
+We have included with this release a new function svdj() which
+computes a singular value decomposition using a cyclic Jacobi
+algorithm. It will work on real and complex matrices as well
+as quaternion matrices. This code therefore demonstrates some
+of the tricks needed to write code that will work on real and
+complex matrices as well as quaternion matrices. We believe this
+may be a useful test feature.
+
+The Matlab functions ceil, floor, fix and round have been
+overloaded for quaternion matrices.
+
+Version 0.9 13 July 2006
+
+The Matlab constructor function complex() has been overloaded
+for quaternions, making it possible to write complex(a, b),
+where one or both of a and b is a quaternion.
+
+The two Matlab functions conv and conv2 (convolution) have
+been overloaded for quaternions.
+
+A new function convert has been introduced to replace the
+previous functions double, single, uint8 etc. convert works
+on the elements of a quaternion, e.g. p = convert(q, 'single')
+results in a quaternion with single precision components.
+The previous functions have been removed as they cause Matlab
+to execute a statement like X(1,2) = quaternion(1,2,3,4) even
+though X is of type double - the result is a corrupted element
+in X, and no error is raised.
+
+The private function isoquaternion has been modified to work
+correctly when the supplied complex number has zero imaginary
+part. This fixes a problem where log(quaternion(1,0,0,0))
+failed instead of returning 0.
+
+A number of minor bug fixes have been incorporated.
+
+Version 0.8 24 March 2006
+
+With this release we have made available the det, svd and eig
+functions. There are some limitations in these functions (see
+the source code) which may be removed in later releases.
+
+All of the Fourier transform functions now work for complex
+quaternions as well as real quaternions. A transform with
+real data and a real axis will be computed using a quaternion
+transform. If the data and/or axis is complex, a complex
+quaternion transform will be computed.
+
+The following functions which were previously unimplemented
+are now implemented and work for real and complex quaternions:
+log, sin, cos, tan, sinh, cosh, tanh.
+
+The function power.m has been implemented, making it possible
+to raise a quaternion to a power using the .^ notation. This
+function uses logarithms in the general case, but implements
+certain special cases such as powers of -1, 0, 1, 2, and 0.5
+using more direct calculation. The square root function has
+also been implemented.
+
+The functions isreal and sign have been added.
+
+The following functions now work correctly for complex as well
+as real quaternions: unit, angle, axis, exp, change_basis,
+orthormal_basis.
+
+A directory of test code has been added. There is a script
+called test.m which runs all the test code, and various
+scripts for testing parts of the library. The test code is
+not comprehensive and will be expanded in due course.
+
+Structure indexing has been added (in a very limited way).
+See the function subsref.m for details (work in progress).
+
+------------------------
+
+Version 0.7 27 July 2005
+
+This version is the first released on Sourceforge.
+
+$Id: Release_notes.txt,v 1.26 2011/03/25 16:23:31 sangwine Exp $

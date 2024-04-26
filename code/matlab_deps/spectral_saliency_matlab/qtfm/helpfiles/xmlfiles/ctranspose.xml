@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!DOCTYPE function SYSTEM "qtfmfunction.dtd">
+<function name = "ctranspose" overload = "true">
+<short>Conjugate transpose of a quaternion</short>
+<syntax>Y = X'</syntax>
+<long>
+<para>
+<code>ctranspose</code> implements the &matlab; <code>'</code> operator for
+quaternion matrices. The conjugate operation is the quaternion conjugate (<i>not</i>
+the complex conjugate as with the standard &matlab; operator).
+</para>
+</long>
+<seealso>
+<matlabfun name = "ctranspose"/>
+<qtfmfun name = "conj"/>
+<qtfmfun name = "transpose"/>
+</seealso>
+</function>
+
+<!--$Id: ctranspose.xml,v 1.2 2009/02/08 19:35:55 sangwine Exp $-->

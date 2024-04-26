@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!DOCTYPE function SYSTEM "qtfmfunction.dtd">
+<function name = "xxx" overload = "true">
+<short>Short description</short>
+<syntax>Y = ??(X)</syntax>
+<long>
+<para>
+<code>??(X)</code> computes the ....
+</para>
+</long>
+<examples>
+<precode>
+Examples to be inserted ...
+</precode>
+</examples>
+<seealso>
+<matlabfun name = "???"/>
+<qtfmfun name = "???"/>
+</seealso>
+<references>
+<reference>
+<italic>I</italic>
+<bold>B</bold>
+</reference>
+</references>
+</function>
+
+<!--$Id$-->

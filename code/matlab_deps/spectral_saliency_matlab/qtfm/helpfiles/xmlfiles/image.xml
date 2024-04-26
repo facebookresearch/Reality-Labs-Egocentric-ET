@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!DOCTYPE function SYSTEM "qtfmfunction.dtd">
+<function name = "image" overload = "true">
+<short>Display a pure quaternion array as an image.</short>
+<syntax>image(A)</syntax>
+<long>
+    <para>
+        <code>image</code> displays a quaternion array as an image.
+        Unlike the overloaded &matlab; function, it supports only one
+        parameter which must be a pure quaternion
+        array with elements of type <code>uint8</code>,
+        <code>uint16</code>, or <code>double</code>.
+    </para>
+</long>
+<examples>
+<precode>>> image(randv(128)./2 + quaternion(1,1,1)./2), axis image
+</precode>
+<para>
+    Creates a random pure quaternion array with component values in the
+    range [0,1] and displays this array as an image.
+</para>
+<figure>randimage.png</figure>
+</examples>
+<seealso>
+<matlabfun name = "image"/>
+<qtfmfun name = "imreadq"/>
+<qtfmfun name = "imwrite"/>
+</seealso>
+</function>
+
+<!--$Id: image.xml,v 1.1 2009/03/06 16:59:51 sangwine Exp $-->

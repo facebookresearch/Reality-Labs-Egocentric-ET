@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!DOCTYPE function SYSTEM "qtfmfunction.dtd">
+<function name = "S/SCALAR" overload = "false">
+<short>Scalar component of a quaternion</short>
+<syntax>r = s(q), r = scalar(q)</syntax>
+<long>
+<para>
+These two functions extract the scalar component of a quaternion.
+The result is a real (or a complex value if the quaternion has
+complex components).
+</para>
+<para>
+The two functions differ in their behaviour when given a pure quaternion
+(that is a quaternion with no scalar part). The function <code>s</code>
+raises an error in this circumstance, whereas <code>scalar</code> returns
+a zero array of the same size as the pure quaternion, with the same class
+as the components of the quaternion. For example if the pure quaternion
+has components of class <code>uint8</code> the array of zeros returned will
+also be of class <code>uint8</code>.
+</para>
+</long>
+<examples>
+<precode>
+>> q = eyeq(2)
+ 
+q = 2x2 quaternion array
+ 
+>> s(q)
+
+ans =
+
+     1     0
+     0     1
+
+>> scalar(qi)
+
+ans =  0
+</precode>
+</examples>
+<seealso>
+<qtfmfun name = "v"/>
+<qtfmfun name = "vector" alias = "v"/>
+<qtfmfun name = "x" alias = "xyz"/>
+<qtfmfun name = "y" alias = "xyz"/>
+<qtfmfun name = "z" alias = "xyz"/>
+</seealso>
+</function>
+
+<!--$Id: s.xml,v 1.2 2009/02/08 19:35:55 sangwine Exp $-->

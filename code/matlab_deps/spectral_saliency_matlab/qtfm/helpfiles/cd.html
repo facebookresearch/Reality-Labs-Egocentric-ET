@@ -1,0 +1,44 @@
+<!-- Generated automatically from an XML file of the same name.
+     Copyright: Stephen J. Sangwine and Nicolas Le Bihan, 2008-2011.
+--><html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+   <title>cd :: Functions (Quaternion Toolbox Function Reference)
+</title><link rel="stylesheet" href="qtfmstyle.css" type="text/css"></head><body><h1>Quaternion Function Reference</h1><h2>cd</h2>
+<p>Cayley-Dickson decomposition</p>
+<h2>Syntax</h2><p><tt>[A, B] = cd(q)</tt></p>
+<h2>Description</h2>
+<p>
+<tt>cd</tt> returns two complex numbers which are the Cayley-Dickson
+components of the quaternion argument. The Cayley-Dickson form represents
+a quaternion as a complex number with two complex components:
+q = A + B j where A = w + x i, B = y + z i. Thus:
+q = (w + x i) + (y + z i) j = w + x i + y j + z k
+</p>
+<p>
+Expressed in Matlab/QTFM code, A and B are such that:
+<pre>
+q = quaternion(real(A), imag(A), real(B), imag(B)).
+</pre>
+</p>
+<p>
+The name of this function is the same as the MATLAB&reg; command for changing
+directory, but the quaternion function is called only when the argument is
+a quaternion. Since a quaternion cannot designate a directory, there is no
+conflict.
+</p>
+
+<h2>Examples</h2>
+<pre>
+&gt;&gt; q = randq
+ 
+q = 0.01899 - 0.2061 * I - 0.9299 * J + 0.304 * K
+ 
+&gt;&gt; [A, B] = cd(q)
+
+A =  0.0190 - 0.2061i
+
+B = -0.9299 + 0.3040i
+</pre>
+
+<h2>See Also</h2>QTFM functions: <a href="cdpolar.html">cdpolar</a>, <a href="dc.html">dc</a><br>
+<h4>&copy; 2008-2011 Stephen J. Sangwine and Nicolas Le Bihan</h4><p><a href="license.html">License terms.</a></p></body></html>
